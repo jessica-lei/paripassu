@@ -124,7 +124,7 @@ Vue.component("obj-fire", {
 			return `property: height; from:${this.obj.fireStrength};to:${this.obj.fireStrength*2}; dir:alternate;dur: 500; easing:easeInOutQuad;loop:true`
 		},
 		sunAnimation() {
-			return `property: position; from:-50 10 0; to: 50 10 0; dur:3000; easing:linear; loop:true`
+			return `property: position; from:-50 10 0; to: 50 10 0; dir:alternate; dur:3000; easing:easeInOutQuad; loop:true`
 		}
 	},
 
