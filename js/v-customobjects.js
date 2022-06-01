@@ -14,9 +14,9 @@ Vue.component("obj-head", {
 		</a-sphere>
 
 		<a-box v-for="(spike,index) in spikes"
-			:depth="headSize*2"
-			:height="headSize*.2"
 			:width="headSize*2"
+			:height="headSize*2"
+			:depth="Math.floor(Math.random()*5)+1"
 			:position="spike.position.toAFrame(0, .2, 0)"
 			:rotation="spike.rotation.toAFrame()"
 			:color="obj.color.toHex(Math.sin(index))" 
@@ -36,11 +36,15 @@ Vue.component("obj-head", {
 	},
 
 	data() {
-		let spikeCount = 5
+		let spikeCount = 1
 		let spikes = []
 
+
 		for (var i = 0; i < spikeCount; i++) {
-			let h = .1
+			let height = Math.floor(Math.random()*5) + 1
+			console.log(height)
+			let h = .5
+
 			let spike = new LiveObject(undefined, { 
 				size: new THREE.Vector3(h*.2, h, h*.2),
 				color: new Vector(noise(i)*30 + 140, 0, 40 + 20*noise(i*3))
@@ -70,15 +74,11 @@ Vue.component("obj-fire", {
 	template: `
 	<a-entity>
 		<a-sphere 
-			color="grey"
+			color="yellow"
 			radius=2 
-			scale="1 .3 1" 
+			scale="1 1 1" 
 			roughness=1
-			segments-height="5"
-			segments-width="10"
-			theta-start=0
-			theta-length=60
-			position="0 -.4 0"
+			:animation="sunAnimation"
 			>
 		</a-sphere>
 		<a-cone
@@ -122,6 +122,9 @@ Vue.component("obj-fire", {
 		},
 		heightAnimation() {
 			return `property: height; from:${this.obj.fireStrength};to:${this.obj.fireStrength*2}; dir:alternate;dur: 500; easing:easeInOutQuad;loop:true`
+		},
+		sunAnimation() {
+			return `property: position; from:-50 10 0; to: 50 10 0; dur:3000; easing:linear; loop:true`
 		}
 	},
 
@@ -208,6 +211,8 @@ Vue.component("obj-world", {
 			:rotation="rock.rotation.toAFrame()"
 			:position="rock.position.toAFrame()">
 		</a-box>
+
+
 
 	</a-entity>
 		`,
